@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bathroom Sign Out/In Sheet</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .container { max-width: 600px; margin: auto; text-align: center; }
+    .question { margin: 20px 0; font-size: 1.2em; }
+    .response { margin: 10px 0; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Bathroom Sign Out/In Sheet</h1>
+    <p id="topic-description">Submit your ID, time out, and time in.</p>
+
+    <div id="question-container">
+      <p id="question" class="question">What is your ID number?</p>
+      <input type="text" id="response" class="response" placeholder="Enter numbers only" />
+      <button onclick="nextQuestion()">Next</button>
+    </div>
+
+    <button onclick="resetData()">Reset</button>
+  </div>
+
+  <script>
+    const questions = [
+      "What is your ID number?",
+      "Time out (HourMinute, no spaces)",
+      "Time in (HourMinute, no spaces)"
+    ];
+    let currentQuestionIndex = 0;
+    let responses = [];
+
+    function nextQuestion() {
+      const responseInput = document.getElementById("response");
+      const response = responseInput.value.trim();
+
+      if (!/^[0-9]+$/.test(response)) {
+        alert("Please enter numbers only.");
+        return;
+      }
+
+      responses.push(response);
+      responseInput.value = '';  
+
+      if (responses.length === questions.length) {
+        alert("Your bathroom trip has been logged!");
+        resetData(); 
+      } else {
+        currentQuestionIndex++;
+        document.getElementById("question").textContent = questions[currentQuestionIndex];
+      }
+    }
+
+    function resetData() {
+      responses = [];
+      currentQuestionIndex = 0;
+      document.getElementById("question").textContent = questions[currentQuestionIndex];
+      document.getElementById("response").value = '';
+    }
+  </script>
+</body>
+</html>
